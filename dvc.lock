@@ -11,3 +11,13 @@ stages:
     - path: data/model_input.csv
       md5: ef66b73ac862dc35d0d40dca303ec819
       size: 222250
+  feature_generation:
+    cmd: python src/generate_descriptors.py data/model_input.csv data/features.csv
+    deps:
+    - path: data/model_input.csv
+      md5: ef66b73ac862dc35d0d40dca303ec819
+      size: 222250
+    outs:
+    - path: data/features.csv
+      md5: e11c7a10d7f771bb4aa83dec4322aab4
+      size: 26975742

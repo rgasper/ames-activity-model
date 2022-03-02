@@ -5,9 +5,15 @@ stages:
       - amesdata/smiles_cas_N6512.smi
     outs:
       - data/model_input.csv
-  hyperoptimization:
-    cmd: chemprop_hyperopt --data_path data/model_input.csv --save_dir data/hyperopt_models --dataset_type ${dataset_type} --ensemble_size ${ensemble_size} --num_folds ${num_folds} --num_iters ${num_iters} --config_save_path data/model_config
+  feature_generation:
+    cmd: python src/generate_descriptors.py data/model_input.csv data/features.csv
     deps:
       - data/model_input.csv
     outs:
-      - data/model_config
+      - data/features.csv
+  # hyperoptimization:
+  #   cmd: chemprop_hyperopt --data_path data/model_input.csv --save_dir data/hyperopt_models --dataset_type ${dataset_type} --ensemble_size ${ensemble_size} --num_folds ${num_folds} --num_iters ${num_iters} --config_save_path data/model_config
+  #   deps:
+  #     - data/model_input.csv
+  #   outs:
+  #     - data/model_config

@@ -3,3 +3,8 @@ chemprop
 git+https://github.com/bp-kelley/descriptastorus
 hyperopt==0.2.5
 scikit-learn
+typer
+mypy
+black
+flake8
+pre-commit
