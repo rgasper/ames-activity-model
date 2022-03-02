@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args": ["data/model_input.csv", "data/features.csv"]
+            "args": ["data/model_input.csv", "data/features_testing.csv", "--frac", "0.01"]
         }
     ]
 }
