@@ -9,6 +9,7 @@ stages:
     cmd: python src/generate_descriptors.py data/model_input.csv data/features.csv
     deps:
       - data/model_input.csv
+      - src/generate_descriptors.py
     outs:
       - data/features.csv
   # hyperoptimization:
