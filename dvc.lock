@@ -1,12 +1,13 @@
 schema: '2.0'
 stages:
   clean_data:
-    cmd: awk '{print $1 "\t"$3}' amesdata/smiles_cas_N6512.smi > data/model_input.smi
+    cmd: echo "smiles,ames" > data/model_input.csv && awk '{print $1","$3}' amesdata/smiles_cas_N6512.smi
+      >> data/model_input.csv
     deps:
     - path: amesdata/smiles_cas_N6512.smi
       md5: aa408bcd82c3f98d086c9d63c38aa488
       size: 301832
     outs:
-    - path: data/model_input.smi
-      md5: 4d2eed965744d5f17282e180e472658e
-      size: 222238
+    - path: data/model_input.csv
+      md5: ef66b73ac862dc35d0d40dca303ec819
+      size: 222250

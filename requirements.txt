@@ -1,3 +1,4 @@
 dvc
 chemprop
 git+https://github.com/bp-kelley/descriptastorus
+hyperopt==0.2.5
