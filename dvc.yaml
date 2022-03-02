@@ -1,0 +1,7 @@
+stages:
+  clean_data:
+    cmd: awk '{print $1 "\t"$3}' amesdata/smiles_cas_N6512.smi > data/model_input.smi
+    deps:
+      - amesdata/smiles_cas_N6512.smi
+    outs:
+      - data/model_input.smi
