@@ -6,15 +6,19 @@ stages:
     outs:
       - data/model_input.csv
   feature_generation:
-    cmd: python src/generate_descriptors.py data/model_input.csv data/features.csv
+    cmd: python src/generate_descriptors.py data/model_input.csv data/features.csv data/targets.csv
     deps:
       - data/model_input.csv
       - src/generate_descriptors.py
     outs:
       - data/features.csv
-  # hyperoptimization:
-  #   cmd: chemprop_hyperopt --data_path data/model_input.csv --save_dir data/hyperopt_models --dataset_type ${dataset_type} --ensemble_size ${ensemble_size} --num_folds ${num_folds} --num_iters ${num_iters} --config_save_path data/model_config
-  #   deps:
-  #     - data/model_input.csv
-  #   outs:
-  #     - data/model_config
+      - data/targets.csv
+  training:
+    cmd: python src/train.py data/targets.csv data/features.csv ${test_frac} data/model.pkl data/metrics.json
+    deps:
+      - data/model_input.csv
+      - data/features.csv
+      - src/train.py
+    outs:
+      - data/model.pkl
+      - data/metrics.json

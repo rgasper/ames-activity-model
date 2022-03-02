@@ -8,9 +8,17 @@
             "name": "Generate Descriptors",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "src/generate_descriptors.py",
             "console": "integratedTerminal",
-            "args": ["data/model_input.csv", "data/features_testing.csv", "--frac", "0.01"]
+            "args": ["data/model_input.csv", "data/features_testing.csv", "data/targets_testing.csv" , "--frac", "0.05"]
+        },
+        {
+            "name": "Train",
+            "type": "python",
+            "request": "launch",
+            "program": "src/train.py",
+            "console": "integratedTerminal",
+            "args": ["data/targets.csv", "data/features.csv", "0.2", "data/model.pkl", "data/metrics.json"]
         }
     ]
 }
