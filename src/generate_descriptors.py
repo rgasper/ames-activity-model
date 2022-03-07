@@ -1,6 +1,7 @@
 import logging
 from typing import Optional
 
+import numpy as np
 import pandas as pd
 import typer
 from click._termui_impl import ProgressBar
@@ -32,12 +33,20 @@ def rdkit_2d_normalized_features(smiles: str, progressbar: Optional[ProgressBar]
 
 
 @cli.command()
-def generate_features(input_file: str, output_file: str) -> None:
+def generate_features(input_file: str, output_features: str, output_targets: str, frac: Optional[float] = None) -> None:
     input_data = pd.read_csv(input_file)
+    if frac is not None:
+        input_data = input_data.sample(frac=frac)
     progressbar: ProgressBar = typer.progressbar(length=len(input_data))
     feature_data = input_data["smiles"].apply(lambda smiles: rdkit_2d_normalized_features(smiles, progressbar))
-    feature_data = feature_data.dropna()
-    feature_data.to_csv(output_file, index=False)
+    dropped_indices = feature_data.loc[feature_data.isna()].index.values
+    feature_data = feature_data.drop(index=dropped_indices)
+    feature_data = np.stack(feature_data.values)  # convert from series of lists into single 2d np array
+    feature_data = np.nan_to_num(feature_data, nan=0.5)  # fill any incalculable values w/ the average - always 0.5
+    target_data = input_data.drop(index=dropped_indices)
+    target_data.to_csv(output_targets, index=False)
+    np.delete(feature_data, dropped_indices, 0)
+    np.savetxt(output_features, feature_data, delimiter=",")
 
 
 if __name__ == "__main__":
