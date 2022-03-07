@@ -2,49 +2,49 @@ schema: '2.0'
 stages:
   clean_data:
     cmd: echo "smiles,ames" > data/model_input.csv && awk '{print $1","$3}' amesdata/smiles_cas_N6512.smi
-      >> data/model_input.csv
+      | sort -R >> data/model_input.csv
     deps:
     - path: amesdata/smiles_cas_N6512.smi
       md5: aa408bcd82c3f98d086c9d63c38aa488
       size: 301832
     outs:
     - path: data/model_input.csv
-      md5: ef66b73ac862dc35d0d40dca303ec819
+      md5: 4555b0ee296be424a3341817988a18af
       size: 222250
   feature_generation:
     cmd: python src/generate_descriptors.py data/model_input.csv data/features.csv
       data/targets.csv
     deps:
     - path: data/model_input.csv
-      md5: ef66b73ac862dc35d0d40dca303ec819
+      md5: 4555b0ee296be424a3341817988a18af
       size: 222250
     - path: src/generate_descriptors.py
-      md5: 477f23f95967d233cbc276d4cef9c985
-      size: 2244
+      md5: 6820599bfcbc16629d2c874999730f82
+      size: 2243
     outs:
     - path: data/features.csv
-      md5: 9bf35dc9fb7955d4b5300957e8a37942
+      md5: 2a4a5e290999c1df5f5188df395d195e
       size: 32530000
     - path: data/targets.csv
-      md5: 0b3c7ac88f3a5c0b95fd1a1046511ac8
+      md5: 58bb35aa38ee8c7e12bd17408d0e2c6b
       size: 222069
   training:
     cmd: python src/train.py data/targets.csv data/features.csv 0.2 data/model.pkl
-      data/metrics.json
+      data/metrics.json --num-samples 500
     deps:
     - path: data/features.csv
-      md5: 9bf35dc9fb7955d4b5300957e8a37942
+      md5: 2a4a5e290999c1df5f5188df395d195e
       size: 32530000
     - path: data/model_input.csv
-      md5: ef66b73ac862dc35d0d40dca303ec819
+      md5: 4555b0ee296be424a3341817988a18af
       size: 222250
     - path: src/train.py
-      md5: 7c6e2176bd1dbdefa5eff40dae2f9015
-      size: 1472
+      md5: 706a2a309b62943689e8b5efd3e19724
+      size: 1723
     outs:
     - path: data/metrics.json
-      md5: 3005f3467645d450958153920a175777
-      size: 17
+      md5: 2363c78ab7dba59b8443d958b47cfa2b
+      size: 4
     - path: data/model.pkl
-      md5: 747539d2c9b279a49d035cfa7fe9db79
-      size: 673967
+      md5: 1913e7b069b032891b8a1eac1c695541
+      size: 346800

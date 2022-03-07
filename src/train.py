@@ -1,5 +1,6 @@
 import json
 import logging
+from typing import Optional
 
 import joblib
 import numpy as np
@@ -27,10 +28,18 @@ def optimized_train(X: np.ndarray, y: np.ndarray) -> RandomForestClassifier:
 
 @cli.command()
 def load_split_train_test(
-    targets_file: str, features_file: str, test_frac: float, model_save_file: str, metrics_save_file: str
+    targets_file: str,
+    features_file: str,
+    test_frac: float,
+    model_save_file: str,
+    metrics_save_file: str,
+    num_samples: Optional[int] = None,
 ):
     targets_df = pd.read_csv(targets_file)
     features_array = np.genfromtxt(features_file, delimiter=",")
+    if num_samples is not None:
+        targets_df = targets_df[:num_samples]  # samples already sorted randomly
+        features_array = features_array[:num_samples]
     X_train, X_test, y_train, y_test = train_test_split(
         features_array, targets_df["ames"], test_size=test_frac, random_state=42
     )

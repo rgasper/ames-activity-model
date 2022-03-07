@@ -1,6 +1,6 @@
 stages:
   clean_data:
-    cmd: echo "smiles,ames" > data/model_input.csv && awk '{print $1","$3}' amesdata/smiles_cas_N6512.smi >> data/model_input.csv
+    cmd: echo "smiles,ames" > data/model_input.csv && awk '{print $1","$3}' amesdata/smiles_cas_N6512.smi | sort -R >> data/model_input.csv
     deps:
       - amesdata/smiles_cas_N6512.smi
     outs:
@@ -14,7 +14,7 @@ stages:
       - data/features.csv
       - data/targets.csv
   training:
-    cmd: python src/train.py data/targets.csv data/features.csv ${test_frac} data/model.pkl data/metrics.json
+    cmd: python src/train.py data/targets.csv data/features.csv ${test_frac} data/model.pkl data/metrics.json --num-samples ${training_data_size}
     deps:
       - data/model_input.csv
       - data/features.csv
