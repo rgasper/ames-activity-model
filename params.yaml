@@ -4,4 +4,4 @@ num_folds: 4
 num_iters: 10 # hyperoptimization number of iterations
 test_frac: 0.2
 
-training_data_size: 250
+training_data_size: 100
