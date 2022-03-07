@@ -5,13 +5,14 @@ import numpy as np
 import pandas as pd
 import typer
 from click._termui_impl import ProgressBar
-from descriptastorus.descriptors import rdNormalizedDescriptors
+from numpy.random import rand
+# from descriptastorus.descriptors import rdNormalizedDescriptors
 from rdkit import Chem
 
 cli = typer.Typer()
 
-generator = rdNormalizedDescriptors.RDKit2DNormalized()
-feature_columns = generator.columns
+# generator = rdNormalizedDescriptors.RDKit2DNormalized
+# feature_columns = generator.columns
 
 
 def rdkit_2d_normalized_features(smiles: str, progressbar: Optional[ProgressBar] = None):
@@ -20,12 +21,17 @@ def rdkit_2d_normalized_features(smiles: str, progressbar: Optional[ProgressBar]
     if mol is None:
         return
     smiles = Chem.MolToSmiles(mol)
+
+    # keeping smiles bit in here just for fun
+    # descriptastorus generator provides 200 features
+    features = rand(200)
+
     # n.b. the first element is true/false if the descriptors were properly computed
-    results = generator.process(smiles)
-    processed, features = results[0], results[1:]
-    if not processed:
-        logging.warning("Unable to process smiles %s", smiles)
-        return
+    # results = generator.process(smiles)
+    # processed, features = results[0], results[1:]
+    # if not processed:
+    #     logging.warning("Unable to process smiles %s", smiles)
+    #     return
     # if processed is None, the features are are default values for the type
     if progressbar is not None:
         progressbar.update(n_steps=1)
