@@ -30,7 +30,7 @@ stages:
       size: 222069
   training:
     cmd: python src/train.py data/targets.csv data/features.csv 0.2 data/model.pkl
-      data/metrics.json --num-samples 500
+      data/metrics.json --num-samples 250
     deps:
     - path: data/features.csv
       md5: 2a4a5e290999c1df5f5188df395d195e
@@ -39,12 +39,12 @@ stages:
       md5: 4555b0ee296be424a3341817988a18af
       size: 222250
     - path: src/train.py
-      md5: 706a2a309b62943689e8b5efd3e19724
+      md5: 1b4d5e39396e369a8e1ddc0ededa19dc
       size: 1723
     outs:
     - path: data/metrics.json
-      md5: 2363c78ab7dba59b8443d958b47cfa2b
+      md5: d5218ddbacad84da2fee0bc28327c962
       size: 4
     - path: data/model.pkl
-      md5: 1913e7b069b032891b8a1eac1c695541
-      size: 346800
+      md5: 9204277551323827552e8630c42cd5af
+      size: 872208
