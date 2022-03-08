@@ -7,6 +7,7 @@ import typer
 from click._termui_impl import ProgressBar
 from descriptastorus.descriptors import rdNormalizedDescriptors
 from rdkit import Chem
+from rdkit.Chem import AllChem
 
 cli = typer.Typer()
 
@@ -26,10 +27,11 @@ def rdkit_2d_normalized_features(smiles: str, progressbar: Optional[ProgressBar]
     if not processed:
         logging.warning("Unable to process smiles %s", smiles)
         return
+    fp = AllChem.GetMorganFingerprintAsBitVect(mol, 3)
     # if processed is None, the features are are default values for the type
     if progressbar is not None:
         progressbar.update(n_steps=1)
-    return features
+    return np.concatenate((features, fp))
 
 
 @cli.command()
