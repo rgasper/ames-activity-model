@@ -20,5 +20,4 @@ stages:
       - data/features.csv
       - src/train.py
     outs:
-      - data/model.pkl
       - data/metrics.json

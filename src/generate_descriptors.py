@@ -23,8 +23,8 @@ def rdkit_2d_normalized_features(smiles: str, progressbar: Optional[ProgressBar]
     smiles = Chem.MolToSmiles(mol)
 
     # keeping smiles bit in here just for fun
-    # descriptastorus generator provides 200 features
-    features = rand(200)
+    # orsiloc work about 500 features - not exactly sure. https://www.nature.com/articles/s41598-021-90690-w
+    features = rand(500)
 
     # n.b. the first element is true/false if the descriptors were properly computed
     # results = generator.process(smiles)
