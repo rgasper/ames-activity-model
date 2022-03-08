@@ -20,7 +20,7 @@ def optimized_train(X: np.ndarray, y: np.ndarray) -> Tuple[RandomForestClassifie
         "n_estimators": randint(50, 500),
     }
     estimator = RandomForestClassifier()
-    optimization = RandomizedSearchCV(estimator, param_distributions, refit=True, n_iter=25, n_jobs=5)
+    optimization = RandomizedSearchCV(estimator, param_distributions, refit=True, n_iter=25, n_jobs=5, cv=10)
     optimization.fit(X, y)
     best_model: RandomForestClassifier = optimization.best_estimator_
     return best_model, optimization.best_score_
