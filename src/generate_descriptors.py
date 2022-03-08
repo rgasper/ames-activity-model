@@ -45,9 +45,8 @@ def generate_features(input_file: str, output_features: str, output_targets: str
     feature_data = feature_data.drop(index=dropped_indices)
     feature_data = np.stack(feature_data.values)  # convert from series of lists into single 2d np array
     feature_data = np.nan_to_num(feature_data, nan=0.5)  # fill any incalculable values w/ the average - always 0.5
-    target_data = input_data.drop(index=dropped_indices)
+    target_data = input_data["ames"].drop(index=dropped_indices)
     target_data.to_csv(output_targets, index=False)
-    np.delete(feature_data, dropped_indices, 0)
     np.savetxt(output_features, feature_data, delimiter=",")
 
 
