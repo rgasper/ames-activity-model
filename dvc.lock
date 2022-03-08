@@ -19,21 +19,21 @@ stages:
       md5: c8c71379397da480bca7f597f4ec053b
       size: 222250
     - path: src/generate_descriptors.py
-      md5: 392da57151eca2402a812d21ae67cfcc
-      size: 2299
+      md5: e44f2a40f4bd406eaa63d552e2eec68e
+      size: 2298
     outs:
     - path: data/features.csv
-      md5: feef7ffbc8717fba7686dc8f2a764711
+      md5: dac2baeee006433be5942f4fb983e6e2
       size: 81325000
     - path: data/targets.csv
       md5: 3f8dbfa648d2bba6afb5af59ceb2151a
       size: 222069
   training:
     cmd: python src/train.py data/targets.csv data/features.csv 0.2 data/model.pkl
-      data/metrics.json --num-samples 100
+      data/metrics.json --num-samples 50
     deps:
     - path: data/features.csv
-      md5: feef7ffbc8717fba7686dc8f2a764711
+      md5: dac2baeee006433be5942f4fb983e6e2
       size: 81325000
     - path: data/model_input.csv
       md5: c8c71379397da480bca7f597f4ec053b
@@ -43,5 +43,5 @@ stages:
       size: 2419
     outs:
     - path: data/metrics.json
-      md5: dbcc7298dec920a66ca58b3b3ad656ef
-      size: 129
+      md5: 4ad9b00d4ebb58e95b20284fa4538774
+      size: 102
